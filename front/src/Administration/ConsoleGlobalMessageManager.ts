@@ -4,6 +4,8 @@ import {RoomConnection} from "../Connexion/RoomConnection";
 import {PlayGlobalMessageInterface} from "../Connexion/ConnexionModels";
 import {ADMIN_URL} from "../Enum/EnvironmentVariable";
 
+import * as quill from "quill";
+
 export const CLASS_CONSOLE_MESSAGE = 'main-console';
 export const INPUT_CONSOLE_MESSAGE = 'input-send-text';
 export const UPLOAD_CONSOLE_MESSAGE = 'input-upload-music';
@@ -48,7 +50,7 @@ export class ConsoleGlobalMessageManager {
         //this.buttonAdminMainConsole = document.createElement('img');
         this.userInputManager = userInputManager;
         this.initialise();
-        
+
     }
 
     initialise() {
@@ -161,7 +163,8 @@ export class ConsoleGlobalMessageManager {
             // Start loading CSS
             const cssPromise = ConsoleGlobalMessageManager.loadCss();
             // Import quill
-            const Quill:any = await import("quill"); // eslint-disable-line @typescript-eslint/no-explicit-any
+
+            const Quill = quill.default || quill;
             // Wait for CSS to be loaded
             await cssPromise;
 
