@@ -10,10 +10,6 @@ WORKDIR /usr/src
 COPY front/yarn.lock front/package.json ./
 RUN yarn install
 
-COPY front .
-COPY --from=builder /usr/src/generated src/Messages/generated
-ENV NODE_ENV=production
-
 ARG BASE_DOMAIN
 ARG API_URL=pusher.$BASE_DOMAIN
 ARG UPLOADER_URL=uploader.$BASE_DOMAIN
@@ -27,6 +23,10 @@ ARG STUN_SERVER
 ARG START_ROOM_URL
 ARG DEBUG_MODE
 ARG MAX_PER_GROUP
+ENV NODE_ENV=production
+
+COPY front .
+COPY --from=builder /usr/src/generated src/Messages/generated
 
 RUN ./templater.sh
 RUN API_URL=$API_URL UPLOADER_URL=$UPLOADER_URL ADMIN_URL=$ADMIN_URL START_ROOM_URL=$START_ROOM_URL \
